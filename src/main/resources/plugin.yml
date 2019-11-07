@@ -1,0 +1,5 @@
+name: Api Usage
+version: ${project.version}
+main: eu.lasersenigma.apiusage.ApiUsage
+api-version: 1.13
+depend: [LasersEnigma]
