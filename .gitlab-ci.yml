@@ -1,0 +1,36 @@
+image: maven:3.6-jdk-8-slim
+stages:
+  - build
+  - deploy
+
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  path: "/builds/$CI_PROJECT_PATH"
+
+cache:
+  paths:
+    - .m2/repository/
+
+build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install
+    - cp $path/core/target/LasersEnigma*.jar $path/
+  artifacts:
+    expire_in: "1 yrs"
+    paths:
+      - $path/LasersEnigma*.jar
+
+release-on-github:
+  stage: deploy
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y libssl-dev git sshpass
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H 22 "github.com" >> ~/.ssh/known_hosts
+    - git push git@github.com:lasers-enigma/sample-api-usage.git ${CI_COMMIT_SHA:-HEAD}:refs/heads/${branch:-master} --force
+  script:
+    - echo "Pushing master branch on github"

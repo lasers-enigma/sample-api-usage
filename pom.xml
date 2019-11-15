@@ -5,19 +5,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.lasersenigma</groupId>
-    <artifactId>api-usage</artifactId>
+    <artifactId>LasersEnigma-API-Usage-example</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <name>Api Usage</name>
-
+    
+    <name>LasersEnigma-API-Usage-example</name>
+    
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
+    
     <build>
-        <defaultGoal>clean package</defaultGoal>
+        <defaultGoal>clean isntall</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -40,6 +42,47 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>20020829</version>
+                    </dependency>
+                </dependencies>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>run-build-xml</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+                                <echo message="Looking for build.xml file."/>
+                                <if>
+                                    <available file="${basedir}/build.xml"/>
+                                    <then>
+                                        <echo message="File ${basedir}/build.xml found. Executing."/>
+                                        <property name="project_artifactid" value="${project.artifactId}"/>
+                                        <property name="project_version" value="${project.version}"/>
+                                        <ant antfile="${basedir}/build.xml">
+                                            <target name="deploy"/>
+                                        </ant>
+                                    </then>
+                                    <else>
+                                        <echo message="File ${basedir}/build.xml not found. Skipping."/>
+                                    </else>
+                                </if>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
@@ -79,6 +122,19 @@
             <groupId>eu.lasersenigma</groupId>
             <artifactId>LasersEnigma</artifactId>
             <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- For build.xml -->
+        <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.10.7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

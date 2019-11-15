@@ -1,0 +1,11 @@
+/target/
+.rebel*
+nb_jr_remoting.cfg
+/.idea/
+*.iml
+nbactions.xml
+dependency-reduced-pom.xml
+build.xml
+.classpath
+.settings/
+.project
