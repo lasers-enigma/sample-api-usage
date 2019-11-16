@@ -16,7 +16,7 @@ build:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS clean install
-    - cp $path/core/target/LasersEnigma*.jar $path/
+    - cp $path/target/LasersEnigma-API-Usage-example-*.jar $path/
   artifacts:
     expire_in: "1 yrs"
     paths:
