@@ -3,3 +3,6 @@ version: ${project.version}
 main: eu.lasersenigma.apiusage.Main
 api-version: 1.13
 depend: [LasersEnigma]
+description: A sample plugin project that uses lasers-enigma api - http://lasers-enigma.eu
+website: lasers-enigma.eu
+author: Lasers Enigma Team <contact@lasers-enigma.eu>

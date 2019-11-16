@@ -4,7 +4,7 @@ stages:
   - deploy
 
 variables:
-  MAVEN_CLI_OPTS: "-X --batch-mode"
+  MAVEN_CLI_OPTS: "--batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
   path: "/builds/$CI_PROJECT_PATH"
 
