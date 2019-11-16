@@ -24,6 +24,8 @@ build:
 
 release-on-github:
   stage: deploy
+  only:
+    - master@lasersenigma/lasersenigma-sample-api-usage
   before_script:
     - apt-get update -qy
     - apt-get install -y libssl-dev git sshpass
