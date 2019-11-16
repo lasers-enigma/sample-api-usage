@@ -3,20 +3,20 @@
 A sample plugin project that uses lasers-enigma api
 
 ## Our website
-[https://lasers-enigma.eu/](lasers-enigma.eu)
+[lasers-enigma.eu](https://lasers-enigma.eu/)
 
 ## Documentation
-[http://wiki.lasers-enigma.eu](wiki.lasers-enigma.eu)
+[wiki.lasers-enigma.eu](http://wiki.lasers-enigma.eu)
 
 ## Lasers-Enigma javadoc
-[https://lasers-enigma.eu/javadoc/](lasers-enigma.eu/javadoc)
+[lasers-enigma.eu/javadoc](https://lasers-enigma.eu/javadoc/)
 
 ## Donation
 
-[https://www.patreon.com/bZx](Patreon)
+[Patreon](https://www.patreon.com/bZx)
 
 # Social networks
 
-* [https://www.facebook.com/Lasers-Enigma-860972544104940/](Facebook)
+* [Facebook](https://www.facebook.com/Lasers-Enigma-860972544104940/)
 
-* [https://twitter.com/LasersEnigma](Twitter)
+* [Twitter](https://twitter.com/LasersEnigma)
