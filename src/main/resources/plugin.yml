@@ -1,6 +1,6 @@
-name: LasersEnigma Api Usage
+name: LasersEnigma-API-Usage
 version: ${project.version}
-main: eu.lasersenigma.apiusage.Main
+main: eu.lasersenigma.apiusage.ApiUsage
 api-version: 1.13
 depend: [LasersEnigma]
 description: A sample plugin project that uses lasers-enigma api - http://lasers-enigma.eu
