@@ -1,24 +1,59 @@
 package eu.lasersenigma.apiusage;
 
 import eu.lasersenigma.Main;
+import eu.lasersenigma.apiusage.lasers_sender_rotate.LasersSendersRotate;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ApiUsage extends JavaPlugin {
-    Main lasers;
-    @Override
-    public void onEnable() {
-        // Plugin startup logic
-        if(getServer().getPluginManager().isPluginEnabled("LasersEnigma")) {
-            lasers = (Main) getServer().getPluginManager().getPlugin("LasersEnigma");
-        } else {
-            getServer().getLogger().severe("This Plugin requires LasersEnigma to run");
-            
-        }
 
+    private static ApiUsage instance;
+    
+    private static Main lasersEnigmaInstance = null;
+
+    public static Main getLasersEnigmaInstance() {
+        return lasersEnigmaInstance;
+    }
+    
+    public static ApiUsage getInstance() {
+        return instance;
     }
 
+    /**
+     * Plugin statup logic
+     */
+    @Override
+    public void onEnable() {
+        if (lasersEnigmaInstance == null) {
+            if (getServer().getPluginManager().isPluginEnabled("LasersEnigma")) {
+                lasersEnigmaInstance = (Main) getServer().getPluginManager().getPlugin("LasersEnigma");
+                instance = this;
+                onEnableConfirmed();
+            }
+        } else {
+            getServer().getLogger().severe("This Plugin requires LasersEnigma to run.");
+            throw new IllegalStateException("This Plugin requires LasersEnigma to run.");
+        }
+    }
+
+    
+    /**
+     * Initialize each sample codes
+     */
+    private void onEnableConfirmed() {
+        // Initialize configuration
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+        
+        // Setup the sample LasersSenderRotate feature
+        LasersSendersRotate.getInstance().onEnable();
+    }
+
+    /**
+     * Plugin shutdown logic
+     */
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        // Disable the sample LasersSenderRotate feature
+        LasersSendersRotate.getInstance().onDisable();
     }
 }
