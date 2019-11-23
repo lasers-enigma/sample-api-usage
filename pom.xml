@@ -99,7 +99,7 @@
     <repositories>
         <repository>
             <id>LasersEnigma</id>
-            <url>https://repository.lasers-enigma.eu/libs-release/</url>
+            <url>https://repository.lasers-enigma.eu/libs-snapshot/</url>
         </repository>
         <repository>
             <id>spigot-repo</id>
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>eu.lasersenigma</groupId>
             <artifactId>LasersEnigma</artifactId>
-            <version>6.3.7</version>
+            <version>6.3.7-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- For build.xml -->

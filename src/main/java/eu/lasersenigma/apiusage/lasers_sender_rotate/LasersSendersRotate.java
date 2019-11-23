@@ -1,7 +1,6 @@
 package eu.lasersenigma.apiusage.lasers_sender_rotate;
 
 import eu.lasersenigma.components.LaserSender;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class LasersSendersRotate {
@@ -40,10 +39,18 @@ public class LasersSendersRotate {
         laserSendersToRotate = new HashSet<>();
     }
     
+
+    /**
+     * Retrieves the set LaserSenders that must rotate
+     * @return the LaserSenders that must rotate
+     */
     public HashSet<LaserSender> getLaserSendersToRotate() {
         return laserSendersToRotate;
     }
 
+    /**
+     * Called when the plugin is enabled
+     */
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void onEnable() {
         // initialize and register the event listeners
@@ -55,6 +62,10 @@ public class LasersSendersRotate {
         }
     }
 
+
+    /**
+     * Called when the plugin is disabled
+     */
     public void onDisable() {
         laserSendersRotateTask.cancel();
         laserSendersRotateTask = null;

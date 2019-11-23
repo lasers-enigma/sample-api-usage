@@ -6,3 +6,7 @@ depend: [LasersEnigma]
 description: A sample plugin project that uses lasers-enigma api - http://lasers-enigma.eu
 website: lasers-enigma.eu
 author: Lasers Enigma Team <contact@lasers-enigma.eu>
+commands:
+  lestats:
+    description: Show players stats
+    usage: /lestats [global] [top|playerName] [step|time|action]
