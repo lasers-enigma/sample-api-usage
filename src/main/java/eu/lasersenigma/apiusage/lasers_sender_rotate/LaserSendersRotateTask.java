@@ -1,6 +1,8 @@
 package eu.lasersenigma.apiusage.lasers_sender_rotate;
 
 import eu.lasersenigma.apiusage.ApiUsage;
+import eu.lasersenigma.areas.Areas;
+import eu.lasersenigma.components.LaserSender;
 import eu.lasersenigma.components.attributes.RotationType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -18,16 +20,18 @@ public class LaserSendersRotateTask extends BukkitRunnable {
     }
 
     /**
-     * The method that will be run repeatedly
+     * The method that will be executed repeatedly
      */
     @Override
     public void run() {
-        LasersSendersRotate.getInstance()
-                .getLaserSendersToRotate() //Retrieves the LaserSenders to rotate collection
-                .stream() //Create a stream (see Java 8 streams)
-                .forEach(laserSender -> { //Loop over LaserSenders
-                    laserSender.rotate(RotationType.RIGHT, false); //rotate the laserSender horizontally and do not save this modification
+        Areas.getInstance().getAreaSet().stream() // Loop over areas
+                .filter(area -> area.isActivated()) // Only activated areas
+                .forEach(area -> {
+                    area.getComponents().stream() // Loop over area's components
+                            .filter(component -> component instanceof LaserSender) // Only laser senders
+                            .forEach(component -> {
+                                ((LaserSender) component).rotate(RotationType.RIGHT, false); //Rotate component without saving the rotation
+                            });
                 });
     }
-
 }
