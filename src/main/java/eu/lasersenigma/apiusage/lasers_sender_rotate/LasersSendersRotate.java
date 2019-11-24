@@ -18,20 +18,29 @@ public class LasersSendersRotate {
         }
         return instance;
     }
+
     /**
      * the task that will be run periodically to rotate laser senders
      */
     private LaserSendersRotateTask laserSendersRotateTask = null;
 
+    /**
+     * Private constructor
+     */
+    private LasersSendersRotate() {
+
+    }
+
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void onEnable() {
-        // initialize and register the event listeners        
+        // start the task
         if (laserSendersRotateTask == null) {
             laserSendersRotateTask = new LaserSendersRotateTask();
         }
     }
 
     public void onDisable() {
+        // stops the task
         laserSendersRotateTask.cancel();
         laserSendersRotateTask = null;
     }
