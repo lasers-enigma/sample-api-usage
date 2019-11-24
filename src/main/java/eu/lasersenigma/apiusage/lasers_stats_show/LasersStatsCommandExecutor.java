@@ -8,14 +8,7 @@ import eu.lasersenigma.config.Message;
 import eu.lasersenigma.exceptions.PlayerStatsNotFoundException;
 import eu.lasersenigma.player.LEPlayers;
 import eu.lasersenigma.stats.AreaStats;
-import static eu.lasersenigma.stats.AreaStats.NEW_LINE;
-import static eu.lasersenigma.stats.AreaStats.RANK_TITLE;
-import static eu.lasersenigma.stats.AreaStats.SEPARATOR;
-import static eu.lasersenigma.stats.AreaStats.TABULATION;
-import static eu.lasersenigma.stats.AreaStats.getMaxLength;
-import static eu.lasersenigma.stats.AreaStats.toStr;
 import eu.lasersenigma.stats.PlayerStats;
-import eu.lasersenigma.text.TabText;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +20,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,15 +28,29 @@ import org.bukkit.entity.Player;
 
 public class LasersStatsCommandExecutor implements CommandExecutor {
 
+    public static final String RANK_TITLE = "#";
+
+    public static final String TABULATION = "`";
+
+    public static final String NEW_LINE = "\n";
+
+    public static final String SEPARATOR = ": ";
+
     public static final String KEYWORD_GLOBAL = "global";
 
     public static final String PLAYER_NOT_FOUND = "Requested player could not be found.";
 
-    public static final String NO_PLAYER_STATS_IN_AREA = "The player did not won this area already";
+    public static final String NO_PLAYER_STATS_IN_AREA = "The player did not won this area already.";
 
-    public static final String NO_RECORDS_FOR_THIS_AREA = "No players has finished this area yet";
-
+    public static final String NO_RECORDS_FOR_THIS_AREA = "No players has finished this area yet.";
+    
+    public static final String NO_PLAYER_RECORDS = "No players statistics yet.";
+            
     public static final int TOP_SIZE = 5;
+
+    public static int getMaxLength(ArrayList<String> strs) {
+        return strs.stream().map(String::length).max(Comparator.comparingInt(length -> length)).orElse(0);
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -107,7 +115,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
 
         headers += area != null ? " records for this area " : " records ";
 
-        headers += playerName == null ? "(number of area solved) " : "";
+        headers += playerName == null && area == null ? "(number of area solved) " : "";
 
         headers += ":";
 
@@ -173,31 +181,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
         for (Integer i = 1; i <= 10; ++i) {
             rankStrs.add(i.toString());
         }
-        int rankStrsMaxLength = getMaxLength(rankStrs) + 1;
-
-        ArrayList<String> durationRecordsStrs = area.getStats().getDurationPlayersRecord().entrySet().stream()
-                .limit(10)
-                .map(e -> {
-                    StringBuilder sb = new StringBuilder(Main.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
-                    sb.append(SEPARATOR);
-                    sb.append(toStr(e.getValue()));
-                    return sb.toString();
-                })
-                .collect(Collectors.toCollection(ArrayList::new));
-        durationRecordsStrs.add(0, Message.DURATION.getMessage());
-        int durationRecordsStrsMaxLength = rankStrsMaxLength + getMaxLength(durationRecordsStrs) + 1;
-
-        ArrayList<String> nbActionRecordsStrs = area.getStats().getNbActionPlayersRecord().entrySet().stream()
-                .limit(10)
-                .map(e -> {
-                    StringBuilder sb = new StringBuilder(Main.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
-                    sb.append(SEPARATOR);
-                    sb.append(e.getValue());
-                    return sb.toString();
-                })
-                .collect(Collectors.toCollection(ArrayList::new));
-        nbActionRecordsStrs.add(0, Message.NBACTIONS.getMessage());
-        int nbActionRecordsStrsMaxLength = durationRecordsStrsMaxLength + getMaxLength(nbActionRecordsStrs) + 1;
+        int rankStrsMaxLength = getMaxLength(rankStrs);
 
         ArrayList<String> nbStepRecordsStrs = area.getStats().getNbStepPlayersRecord().entrySet().stream()
                 .limit(10)
@@ -209,6 +193,31 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
         nbStepRecordsStrs.add(0, Message.NBSTEPS.getMessage());
+        int nbStepsStrsMaxLength = getMaxLength(nbStepRecordsStrs) + rankStrsMaxLength;
+
+        ArrayList<String> durationRecordsStrs = area.getStats().getDurationPlayersRecord().entrySet().stream()
+                .limit(10)
+                .map(e -> {
+                    StringBuilder sb = new StringBuilder(Main.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
+                    sb.append(SEPARATOR);
+                    sb.append(DurationFormatUtils.formatDurationHMS(e.getValue().toMillis()));
+                    return sb.toString();
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+        durationRecordsStrs.add(0, Message.DURATION.getMessage());
+        int durationRecordsStrsMaxLength = getMaxLength(durationRecordsStrs) + nbStepsStrsMaxLength;
+
+        ArrayList<String> nbActionRecordsStrs = area.getStats().getNbActionPlayersRecord().entrySet().stream()
+                .limit(10)
+                .map(e -> {
+                    StringBuilder sb = new StringBuilder(Main.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
+                    sb.append(SEPARATOR);
+                    sb.append(e.getValue());
+                    return sb.toString();
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+        nbActionRecordsStrs.add(0, Message.NBACTIONS.getMessage());
+        int nbActionRecordsStrsMaxLength = getMaxLength(nbActionRecordsStrs) + durationRecordsStrsMaxLength;
 
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         StringBuilder sb = new StringBuilder();
@@ -228,15 +237,14 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
                 sb.append(NEW_LINE);
             }
         }
-        if (i == 0) {
+        if (i <= 1) {
             statsMessages.add(NO_RECORDS_FOR_THIS_AREA);
             return;
         }
         TabText tt = new TabText(sb.toString());
+        tt.setTabs(rankStrsMaxLength, nbStepsStrsMaxLength, durationRecordsStrsMaxLength, nbActionRecordsStrsMaxLength);
         tt.setPageHeight(11);
-        tt.setTabs(new int[]{rankStrsMaxLength, durationRecordsStrsMaxLength, nbActionRecordsStrsMaxLength});
         statsMessages.add(tt.getPage(1, false));
-        statsMessages.add(tt.getPage(2, false));
     }
 
     private void getTopRecords(ArrayList<String> statsMessages) {
@@ -259,9 +267,13 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
                 .sorted(Comparator.comparingInt(Map.Entry<UUID, Integer>::getValue).reversed())
                 .limit(10)
                 .collect(Collectors.toList());
-        for(int i = 1; i <= topPlayers.size(); ++i) {
-            Entry<UUID, Integer> entry = topPlayers.get(i-1);
-            statsMessages.add(i + ". " + Main.getInstance().getServer().getOfflinePlayer(entry.getKey()).getName() + " (" + String.valueOf(entry.getValue()) + ")");
+        if (topPlayers.isEmpty()) {
+            statsMessages.add(NO_PLAYER_RECORDS);
+        } else {
+            for (int i = 1; i <= topPlayers.size(); ++i) {
+                Entry<UUID, Integer> entry = topPlayers.get(i - 1);
+                statsMessages.add(i + ". " + Main.getInstance().getServer().getOfflinePlayer(entry.getKey()).getName() + " (" + String.valueOf(entry.getValue()) + ")");
+            }
         }
     }
 }
