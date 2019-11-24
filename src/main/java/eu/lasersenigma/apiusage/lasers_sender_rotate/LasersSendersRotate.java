@@ -1,5 +1,4 @@
 package eu.lasersenigma.apiusage.lasers_sender_rotate;
-
 public class LasersSendersRotate {
 
     /**
@@ -23,14 +22,17 @@ public class LasersSendersRotate {
      * the task that will be run periodically to rotate laser senders
      */
     private LaserSendersRotateTask laserSendersRotateTask = null;
-
-    /**
+    
+    /*
      * Private constructor
      */
     private LasersSendersRotate() {
 
     }
 
+    /**
+     * Called when the plugin is enabled
+     */
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void onEnable() {
         // start the task
@@ -39,6 +41,10 @@ public class LasersSendersRotate {
         }
     }
 
+
+    /**
+     * Called when the plugin is disabled
+     */
     public void onDisable() {
         // stops the task
         laserSendersRotateTask.cancel();

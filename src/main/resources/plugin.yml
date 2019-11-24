@@ -3,6 +3,15 @@ version: ${project.version}
 main: eu.lasersenigma.apiusage.ApiUsage
 api-version: 1.13
 depend: [LasersEnigma]
-description: A sample plugin project that uses lasers-enigma api - http://lasers-enigma.eu
-website: lasers-enigma.eu
+description: A demo plugin that uses lasers-enigma api - http://lasers-enigma.eu
+website: https://lasers-enigma.eu
 author: Lasers Enigma Team <contact@lasers-enigma.eu>
+commands:
+  lestats:
+    description: Show players stats
+    usage: 'Usage: /lestats [global] [<playerName>]'
+    permission: lasersapi.stats
+permissions:
+  lasersapi.stats:
+    description: To use the /lestats command
+    default: true
