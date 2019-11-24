@@ -34,8 +34,6 @@ import org.bukkit.entity.Player;
 
 public class LasersStatsCommandExecutor implements CommandExecutor {
 
-    public static String USAGE = "lestats [global] [<playerName>]";
-
     public static final String KEYWORD_GLOBAL = "global";
 
     public static final String PLAYER_NOT_FOUND = "Requested player could not be found.";
@@ -49,7 +47,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        List<String> argsToProcess = Arrays.asList(args);
+        List<String> argsToProcess = new ArrayList<>(Arrays.asList(args));
         //Only players can use this command
         if (!(sender instanceof Player)) {
             return false;
@@ -80,8 +78,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
         }
 
         if (!argsToProcess.isEmpty()) {
-            player.sendMessage(USAGE);
-            return true;
+            return false;
         }
 
         ArrayList<String> statsMessages = getStatsMessage(area, playerName);
@@ -159,7 +156,8 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
         long totalPlayerNbActionsInRecords = statsPerArea.values().stream()
                 .map(playerStats -> playerStats.getNbAction())
                 .collect(Collectors.summingLong(Integer::toUnsignedLong));
-        statsMessages.add("Total number of steps : " + totalTimeSpentInRecords);
+        statsMessages.add("Total number of area solved : " + nbAreaSolved);
+        statsMessages.add("Total number of steps : " + totalPlayerNbStepsInRecords);
         statsMessages.add("Total time spent : " + AreaStats.toStr(totalTimeSpentInRecords));
         statsMessages.add("Total number of actions : " + totalPlayerNbActionsInRecords);
     }
@@ -221,9 +219,9 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
             }
             sb.append(rankStrs.get(i));
             sb.append(TABULATION);
-            sb.append(durationRecordsStrs.get(i));
-            sb.append(TABULATION);
             sb.append(nbStepRecordsStrs.get(i));
+            sb.append(TABULATION);
+            sb.append(durationRecordsStrs.get(i));
             sb.append(TABULATION);
             sb.append(nbActionRecordsStrs.get(i));
             if (i != 10 && i != durationRecordsStrs.size()) {

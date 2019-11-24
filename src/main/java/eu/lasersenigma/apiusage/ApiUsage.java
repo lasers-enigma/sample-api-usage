@@ -8,13 +8,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class ApiUsage extends JavaPlugin {
 
     private static ApiUsage instance;
-    
+
     private static Main lasersEnigmaInstance = null;
 
     public static Main getLasersEnigmaInstance() {
         return lasersEnigmaInstance;
     }
-    
+
     public static ApiUsage getInstance() {
         return instance;
     }
@@ -36,7 +36,6 @@ public final class ApiUsage extends JavaPlugin {
         }
     }
 
-    
     /**
      * Initialize each sample codes
      */
@@ -44,12 +43,12 @@ public final class ApiUsage extends JavaPlugin {
         // Initialize configuration
         getConfig().options().copyDefaults(true);
         saveConfig();
-        
+
         // Setup the sample LasersSenderRotate feature
         LasersSendersRotate.getInstance().onEnable();
-        
+
         // Setup the sample LasersStatsShow feature
-        LasersStatsShow.getInstance().onDisable();
+        LasersStatsShow.getInstance().onEnable();
     }
 
     /**
@@ -59,7 +58,7 @@ public final class ApiUsage extends JavaPlugin {
     public void onDisable() {
         // Disable the sample LasersSenderRotate feature
         LasersSendersRotate.getInstance().onDisable();
-        
+
         // Disable the sample LasersStatsShow feature
         LasersStatsShow.getInstance().onDisable();
     }
