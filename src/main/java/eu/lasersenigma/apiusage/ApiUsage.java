@@ -1,6 +1,7 @@
 package eu.lasersenigma.apiusage;
 
 import eu.lasersenigma.Main;
+import eu.lasersenigma.apiusage.creepers_explosion.CreeperExplosion;
 import eu.lasersenigma.apiusage.lasers_sender_rotate.LasersSendersRotate;
 import eu.lasersenigma.apiusage.lasers_stats_show.LasersStatsShow;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public final class ApiUsage extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        getLogger().warning("[LasersEnigmaApiUsage] Keep in mind that this plugin contains sample features and is not meant to be used as is in a server");
         if (lasersEnigmaInstance == null) {
             if (getServer().getPluginManager().isPluginEnabled("LasersEnigma")) {
                 lasersEnigmaInstance = (Main) getServer().getPluginManager().getPlugin("LasersEnigma");
@@ -49,6 +51,9 @@ public final class ApiUsage extends JavaPlugin {
 
         // Setup the sample LasersStatsShow feature
         LasersStatsShow.getInstance().onEnable();
+        
+        // Setup the sample Creeper explosion
+        CreeperExplosion.getInstance().onEnable();
     }
 
     /**
@@ -61,5 +66,8 @@ public final class ApiUsage extends JavaPlugin {
 
         // Disable the sample LasersStatsShow feature
         LasersStatsShow.getInstance().onDisable();
+        
+        // Disable the sample Creeper explosion
+        CreeperExplosion.getInstance().onDisable();
     }
 }
