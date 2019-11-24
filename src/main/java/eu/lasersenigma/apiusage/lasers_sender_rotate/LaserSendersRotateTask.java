@@ -30,7 +30,7 @@ public class LaserSendersRotateTask extends BukkitRunnable {
                     area.getComponents().stream() // Loop over area's components
                             .filter(component -> component instanceof LaserSender) // Only laser senders
                             .forEach(component -> {
-                                ((LaserSender) component).rotate(RotationType.RIGHT, false); //Rotate component without saving the rotation
+                                ((LaserSender) component).rotate(RotationType.RIGHT, false); // Rotate component without saving the rotation
                             });
                 });
     }
