@@ -2,6 +2,7 @@ package eu.lasersenigma.apiusage;
 
 import eu.lasersenigma.Main;
 import eu.lasersenigma.apiusage.creepers_explosion.CreeperExplosion;
+import eu.lasersenigma.apiusage.lasers_burns_blocks.LasersBurnsBlocks;
 import eu.lasersenigma.apiusage.lasers_sender_rotate.LasersSendersRotate;
 import eu.lasersenigma.apiusage.lasers_stats_show.LasersStatsShow;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -52,8 +53,11 @@ public final class ApiUsage extends JavaPlugin {
         // Setup the sample LasersStatsShow feature
         LasersStatsShow.getInstance().onEnable();
         
-        // Setup the sample Creeper explosion
+        // Setup the sample Creeper explosion feature
         CreeperExplosion.getInstance().onEnable();
+        
+        // Setup the sample Lasers makes wood burn feature
+        LasersBurnsBlocks.getInstance().onEnable();
     }
 
     /**
@@ -69,5 +73,8 @@ public final class ApiUsage extends JavaPlugin {
         
         // Disable the sample Creeper explosion
         CreeperExplosion.getInstance().onDisable();
+        
+        // Disable the sample Lasers makes wood burn feature
+        LasersBurnsBlocks.getInstance().onDisable();
     }
 }

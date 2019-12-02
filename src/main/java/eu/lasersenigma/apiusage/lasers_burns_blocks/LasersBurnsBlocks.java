@@ -1,22 +1,22 @@
-package eu.lasersenigma.apiusage.creepers_explosion;
+package eu.lasersenigma.apiusage.lasers_burns_blocks;
 
 import org.bukkit.event.HandlerList;
 
-public class CreeperExplosion {
+public class LasersBurnsBlocks {
 
     /**
      * private instance of this class (see Singleton design pattern)
      */
-    private static CreeperExplosion instance;
+    private static LasersBurnsBlocks instance;
 
     /**
      * public getInstance method (see Singleton design pattern)
      *
      * @return the only instance of this class
      */
-    public static CreeperExplosion getInstance() {
+    public static LasersBurnsBlocks getInstance() {
         if (instance == null) {
-            instance = new CreeperExplosion();
+            instance = new LasersBurnsBlocks();
         }
         return instance;
     }
@@ -24,15 +24,15 @@ public class CreeperExplosion {
     /**
      * Private constructor (Singleton design pattern)
      */
-    private CreeperExplosion() {
+    private LasersBurnsBlocks() {
 
     }
 
-    private CreeperExplosionEventListener eventListener;
+    private ParticleTryToHitBlockLEEventListener eventListener;
 
     public void onEnable() {
         // initialize the event listeners
-        eventListener = new CreeperExplosionEventListener();
+        eventListener = new ParticleTryToHitBlockLEEventListener();
     }
 
     public void onDisable() {

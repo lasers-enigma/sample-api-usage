@@ -1,4 +1,5 @@
 package eu.lasersenigma.apiusage.lasers_sender_rotate;
+
 public class LasersSendersRotate {
 
     /**
@@ -22,7 +23,7 @@ public class LasersSendersRotate {
      * the task that will be run periodically to rotate laser senders
      */
     private LaserSendersRotateTask laserSendersRotateTask = null;
-    
+
     /*
      * Private constructor
      */
@@ -40,7 +41,6 @@ public class LasersSendersRotate {
             laserSendersRotateTask = new LaserSendersRotateTask();
         }
     }
-
 
     /**
      * Called when the plugin is disabled
