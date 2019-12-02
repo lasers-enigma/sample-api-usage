@@ -26,7 +26,7 @@ public class LasersGiveCommand {
      */
     @SuppressWarnings("null")
     public void onEnable() {
-        ApiUsage.getInstance().getCommand("lestats").setExecutor(new LasersGiveCommandExecutor());
+        ApiUsage.getInstance().getCommand("legive").setExecutor(new LasersGiveCommandExecutor());
     }
 
     /**

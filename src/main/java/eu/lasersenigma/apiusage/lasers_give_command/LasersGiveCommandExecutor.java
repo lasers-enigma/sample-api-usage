@@ -1,16 +1,11 @@
 package eu.lasersenigma.apiusage.lasers_give_command;
 
 import eu.lasersenigma.components.attributes.LasersColor;
-import eu.lasersenigma.items.ArmorAction;
 import eu.lasersenigma.items.Item;
 import eu.lasersenigma.items.ItemsFactory;
-import eu.lasersenigma.nms.NMSManager;
-import eu.lasersenigma.player.LEPlayer;
-import eu.lasersenigma.player.LEPlayers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
@@ -18,7 +13,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 
 public class LasersGiveCommandExecutor implements CommandExecutor {
