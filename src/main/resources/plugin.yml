@@ -11,7 +11,16 @@ commands:
     description: Show players stats
     usage: 'Usage: /lestats [global] [<playerName>]'
     permission: lasersapi.stats
+  legive:
+    description: Gives players lasers related items
+    usage: |-
+      Usage: /legive <player> mirror [color]
+             /legive <player> armor [noBurn] [noDamage] [noKnockback] [reflection] [focus] [prism] [<durability number from 1 to 9>] [equip]
+    permission: lasersapi.give
 permissions:
   lasersapi.stats:
     description: To use the /lestats command
     default: true
+  lasersapi.give:
+    description: To use the /legive command
+    default: op
