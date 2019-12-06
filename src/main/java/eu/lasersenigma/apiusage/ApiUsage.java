@@ -3,9 +3,11 @@ package eu.lasersenigma.apiusage;
 import eu.lasersenigma.Main;
 import eu.lasersenigma.apiusage.creepers_explosion.CreeperExplosion;
 import eu.lasersenigma.apiusage.lasers_burns_blocks.LasersBurnsBlocks;
+import eu.lasersenigma.apiusage.swords_attacks_redirect_lasers.SwordsAttacksRedirectLasers;
 import eu.lasersenigma.apiusage.lasers_give_command.LasersGiveCommand;
 import eu.lasersenigma.apiusage.lasers_sender_rotate.LasersSendersRotate;
 import eu.lasersenigma.apiusage.lasers_stats_show.LasersStatsShow;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ApiUsage extends JavaPlugin {
@@ -45,23 +47,45 @@ public final class ApiUsage extends JavaPlugin {
      */
     private void onEnableConfirmed() {
         // Initialize configuration
-        getConfig().options().copyDefaults(true);
+        FileConfiguration config = getConfig();
+        config.addDefault("creepers_explosion", true);
+        config.addDefault("lasers_burns_blocks", true);
+        config.addDefault("lasers_give_command", true);
+        config.addDefault("lasers_sender_rotate", true);
+        config.addDefault("lasers_stats_show", true);
+        config.addDefault("swords_attacks_redirect_lasers", true);
+        config.options().copyDefaults(true);
         saveConfig();
 
         // Setup the sample LasersSenderRotate feature
-        LasersSendersRotate.getInstance().onEnable();
+        if (config.getBoolean("lasers_sender_rotate")) {
+            LasersSendersRotate.getInstance().onEnable();
+        }
 
         // Setup the sample /lestats command feature
-        LasersStatsShow.getInstance().onEnable();
-        
+        if (config.getBoolean("lasers_stats_show")) {
+            LasersStatsShow.getInstance().onEnable();
+        }
+
         // Setup the sample Creeper explosion feature
-        CreeperExplosion.getInstance().onEnable();
-        
+        if (config.getBoolean("creepers_explosion")) {
+            CreeperExplosion.getInstance().onEnable();
+        }
+
         // Setup the sample Lasers burns blocks feature
-        LasersBurnsBlocks.getInstance().onEnable();
-        
+        if (config.getBoolean("lasers_burns_blocks")) {
+            LasersBurnsBlocks.getInstance().onEnable();
+        }
+
         // Setup the sample /legive Command feature
-        LasersGiveCommand.getInstance().onEnable();
+        if (config.getBoolean("lasers_sender_rotate")) {
+            LasersGiveCommand.getInstance().onEnable();
+        }
+
+        // Setup the sample swords attacks redirect lasers feature
+        if (config.getBoolean("swords_attacks_redirect_lasers")) {
+            SwordsAttacksRedirectLasers.getInstance().onEnable();
+        }
     }
 
     /**
@@ -74,14 +98,17 @@ public final class ApiUsage extends JavaPlugin {
 
         // Disable the sample /lestats command feature
         LasersStatsShow.getInstance().onDisable();
-        
+
         // Disable the sample Creeper explosion
         CreeperExplosion.getInstance().onDisable();
-        
+
         // Disable the sample Lasers burns blocks feature
         LasersBurnsBlocks.getInstance().onDisable();
-        
+
         // Disable the sample /legive Command feature
         LasersGiveCommand.getInstance().onDisable();
+
+        // Disable the sample swords attacks redirect lasers feature
+        SwordsAttacksRedirectLasers.getInstance().onDisable();
     }
 }

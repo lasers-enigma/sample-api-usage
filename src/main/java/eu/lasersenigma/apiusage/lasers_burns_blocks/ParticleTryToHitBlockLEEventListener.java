@@ -27,7 +27,7 @@ public class ParticleTryToHitBlockLEEventListener implements Listener {
      * @param event an explode event
      */
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onEntityExplode(ParticleTryToHitBlockLEEvent event) {
+    public void onParticleTryToHitBlockLEEvent(ParticleTryToHitBlockLEEvent event) {
         
         //Only works for burnable blocks
         if (event.getBlock().getType().isBurnable()) {
