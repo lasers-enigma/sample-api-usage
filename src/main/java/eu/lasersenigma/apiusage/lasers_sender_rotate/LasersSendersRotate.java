@@ -1,6 +1,14 @@
 package eu.lasersenigma.apiusage.lasers_sender_rotate;
 
-public class LasersSendersRotate {
+import eu.lasersenigma.apiusage.ApiUsage;
+import eu.lasersenigma.apiusage.IFeature;
+
+public class LasersSendersRotate implements IFeature {
+
+    /**
+     * Path in configuration file
+     */
+    private static final String CONFIG_FEATURE_ACTIVATED = "lasers_sender_rotate";
 
     /**
      * private instance of this class (see Singleton design pattern)
@@ -34,21 +42,31 @@ public class LasersSendersRotate {
     /**
      * Called when the plugin is enabled
      */
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    @Override
     public void onEnable() {
         // start the task
-        if (laserSendersRotateTask == null) {
-            laserSendersRotateTask = new LaserSendersRotateTask();
+        if (ApiUsage.getInstance().getConfig().getBoolean(CONFIG_FEATURE_ACTIVATED)) {
+            if (laserSendersRotateTask == null) {
+                laserSendersRotateTask = new LaserSendersRotateTask();
+            }
         }
     }
 
     /**
      * Called when the plugin is disabled
      */
+    @Override
     public void onDisable() {
         // stops the task
-        laserSendersRotateTask.cancel();
-        laserSendersRotateTask = null;
+        if (laserSendersRotateTask != null) {
+            laserSendersRotateTask.cancel();
+            laserSendersRotateTask = null;
+        }
+    }
+
+    @Override
+    public void setConfigDefaults() {
+        ApiUsage.getInstance().getConfig().addDefault(CONFIG_FEATURE_ACTIVATED, true);
     }
 
 }

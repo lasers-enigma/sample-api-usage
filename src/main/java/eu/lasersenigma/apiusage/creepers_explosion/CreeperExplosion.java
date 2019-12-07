@@ -1,9 +1,16 @@
 package eu.lasersenigma.apiusage.creepers_explosion;
 
+import eu.lasersenigma.apiusage.ApiUsage;
+import eu.lasersenigma.apiusage.IFeature;
 import org.bukkit.event.HandlerList;
 
-public class CreeperExplosion {
+public class CreeperExplosion implements IFeature {
 
+    /**
+     * Path in configuration file
+     */
+    private static final String CONFIG_FEATURE_ACTIVATED = "creepers_explosion";
+    
     /**
      * private instance of this class (see Singleton design pattern)
      */
@@ -21,22 +28,33 @@ public class CreeperExplosion {
         return instance;
     }
 
+    private CreeperExplosionEventListener eventListener = null;
+
     /**
      * Private constructor (Singleton design pattern)
      */
     private CreeperExplosion() {
-
     }
 
-    private CreeperExplosionEventListener eventListener;
-
+    @Override
     public void onEnable() {
         // initialize the event listeners
-        eventListener = new CreeperExplosionEventListener();
+        if (ApiUsage.getInstance().getConfig().getBoolean(CONFIG_FEATURE_ACTIVATED)) {
+            eventListener = new CreeperExplosionEventListener();
+        }
     }
 
+    @Override
     public void onDisable() {
         // Unregister the event listener
-        HandlerList.unregisterAll(eventListener);
+        if (eventListener != null) {
+            HandlerList.unregisterAll(eventListener);
+            eventListener = null;
+        }
+    }
+
+    @Override
+    public void setConfigDefaults() {
+        ApiUsage.getInstance().getConfig().addDefault(CONFIG_FEATURE_ACTIVATED, true);
     }
 }

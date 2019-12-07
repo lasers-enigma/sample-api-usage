@@ -5,24 +5,29 @@ import eu.lasersenigma.apiusage.creepers_explosion.CreeperExplosion;
 import eu.lasersenigma.apiusage.lasers_burns_blocks.LasersBurnsBlocks;
 import eu.lasersenigma.apiusage.swords_attacks_redirect_lasers.SwordsAttacksRedirectLasers;
 import eu.lasersenigma.apiusage.lasers_give_command.LasersGiveCommand;
+import eu.lasersenigma.apiusage.lasers_players_explosion.LasersPlayersExplosion;
 import eu.lasersenigma.apiusage.lasers_sender_rotate.LasersSendersRotate;
 import eu.lasersenigma.apiusage.lasers_stats_show.LasersStatsShow;
+import java.util.Arrays;
+import java.util.HashSet;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ApiUsage extends JavaPlugin {
-
+    
     private static ApiUsage instance;
-
+    
     private static Main lasersEnigmaInstance = null;
-
+    
     public static Main getLasersEnigmaInstance() {
         return lasersEnigmaInstance;
     }
-
+    
     public static ApiUsage getInstance() {
         return instance;
     }
+    
+    private HashSet<IFeature> features;
 
     /**
      * Plugin statup logic
@@ -46,46 +51,25 @@ public final class ApiUsage extends JavaPlugin {
      * Initialize each sample codes
      */
     private void onEnableConfirmed() {
+        
+        features = new HashSet<>(Arrays.asList(
+                CreeperExplosion.getInstance(),
+                LasersBurnsBlocks.getInstance(),
+                LasersGiveCommand.getInstance(),
+                LasersPlayersExplosion.getInstance(),
+                LasersSendersRotate.getInstance(),
+                LasersStatsShow.getInstance(),
+                SwordsAttacksRedirectLasers.getInstance()
+        ));
+
         // Initialize configuration
         FileConfiguration config = getConfig();
-        config.addDefault("creepers_explosion", true);
-        config.addDefault("lasers_burns_blocks", true);
-        config.addDefault("lasers_give_command", true);
-        config.addDefault("lasers_sender_rotate", true);
-        config.addDefault("lasers_stats_show", true);
-        config.addDefault("swords_attacks_redirect_lasers", true);
+        features.forEach(feature -> feature.setConfigDefaults());
         config.options().copyDefaults(true);
         saveConfig();
 
-        // Setup the sample LasersSenderRotate feature
-        if (config.getBoolean("lasers_sender_rotate")) {
-            LasersSendersRotate.getInstance().onEnable();
-        }
-
-        // Setup the sample /lestats command feature
-        if (config.getBoolean("lasers_stats_show")) {
-            LasersStatsShow.getInstance().onEnable();
-        }
-
-        // Setup the sample Creeper explosion feature
-        if (config.getBoolean("creepers_explosion")) {
-            CreeperExplosion.getInstance().onEnable();
-        }
-
-        // Setup the sample Lasers burns blocks feature
-        if (config.getBoolean("lasers_burns_blocks")) {
-            LasersBurnsBlocks.getInstance().onEnable();
-        }
-
-        // Setup the sample /legive Command feature
-        if (config.getBoolean("lasers_sender_rotate")) {
-            LasersGiveCommand.getInstance().onEnable();
-        }
-
-        // Setup the sample swords attacks redirect lasers feature
-        if (config.getBoolean("swords_attacks_redirect_lasers")) {
-            SwordsAttacksRedirectLasers.getInstance().onEnable();
-        }
+        // Setup features
+        features.forEach(feature -> feature.onEnable());
     }
 
     /**
@@ -93,22 +77,7 @@ public final class ApiUsage extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        // Disable the sample LasersSenderRotate feature
-        LasersSendersRotate.getInstance().onDisable();
-
-        // Disable the sample /lestats command feature
-        LasersStatsShow.getInstance().onDisable();
-
-        // Disable the sample Creeper explosion
-        CreeperExplosion.getInstance().onDisable();
-
-        // Disable the sample Lasers burns blocks feature
-        LasersBurnsBlocks.getInstance().onDisable();
-
-        // Disable the sample /legive Command feature
-        LasersGiveCommand.getInstance().onDisable();
-
-        // Disable the sample swords attacks redirect lasers feature
-        SwordsAttacksRedirectLasers.getInstance().onDisable();
+        //Disable features
+        features.forEach(feature -> feature.onDisable());
     }
 }

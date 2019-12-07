@@ -1,8 +1,14 @@
 package eu.lasersenigma.apiusage.lasers_stats_show;
 
 import eu.lasersenigma.apiusage.ApiUsage;
+import eu.lasersenigma.apiusage.IFeature;
 
-public class LasersStatsShow {
+public class LasersStatsShow implements IFeature {
+
+    /**
+     * Path in configuration file
+     */
+    private static final String CONFIG_FEATURE_ACTIVATED = "lasers_stats_show";
 
     /**
      * private instance of this class (see Singleton design pattern)
@@ -25,14 +31,23 @@ public class LasersStatsShow {
      * Called when the plugin is enabled
      */
     @SuppressWarnings("null")
+    @Override
     public void onEnable() {
-        ApiUsage.getInstance().getCommand("lestats").setExecutor(new LasersStatsCommandExecutor());
+        if (ApiUsage.getInstance().getConfig().getBoolean(CONFIG_FEATURE_ACTIVATED)) {
+            ApiUsage.getInstance().getCommand("lestats").setExecutor(new LasersStatsCommandExecutor());
+        }
     }
 
     /**
      * Called when the plugin is disabled
      */
+    @Override
     public void onDisable() {
 
+    }
+
+    @Override
+    public void setConfigDefaults() {
+        ApiUsage.getInstance().getConfig().addDefault(CONFIG_FEATURE_ACTIVATED, true);
     }
 }

@@ -6,8 +6,6 @@ import eu.lasersenigma.areas.Areas;
 import eu.lasersenigma.components.attributes.Direction;
 import eu.lasersenigma.particles.LaserParticle;
 import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
