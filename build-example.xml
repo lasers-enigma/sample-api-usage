@@ -10,11 +10,13 @@
             <fileset dir="D:\DEV\Spigot-1.12\plugins\" includes="LasersEnigma-API-Usage-example-*.jar"/>
             <fileset dir="D:\DEV\Spigot-1.13\plugins\" includes="LasersEnigma-API-Usage-example-*.jar"/>
             <fileset dir="D:\DEV\Spigot-1.14\plugins\" includes="LasersEnigma-API-Usage-example-*.jar"/>
+            <fileset dir="D:\DEV\Spigot-1.15\plugins\" includes="LasersEnigma-API-Usage-example-*.jar"/>
         </delete>
         
-        <echo message="Copying build plugin to D:\DEV\Spigot-1.1[2|3|4]\plugins\"/>
+        <echo message="Copying built jar to D:\DEV\Spigot-1.1[2|3|4|5]\plugins\"/>
         <copy file="target/${project_artifactid}-${project_version}.jar" todir="D:\DEV\Spigot-1.12\plugins\"/>
         <copy file="target/${project_artifactid}-${project_version}.jar" todir="D:\DEV\Spigot-1.13\plugins\"/>
         <copy file="target/${project_artifactid}-${project_version}.jar" todir="D:\DEV\Spigot-1.14\plugins\"/>
+        <copy file="target/${project_artifactid}-${project_version}.jar" todir="D:\DEV\Spigot-1.15\plugins\"/>
     </target>
 </project>
