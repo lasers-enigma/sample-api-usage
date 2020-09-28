@@ -19,7 +19,7 @@
     </properties>
     
     <build>
-        <defaultGoal>clean isntall</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -99,7 +99,7 @@
     <repositories>
         <repository>
             <id>LasersEnigma</id>
-            <url>https://repository.lasers-enigma.eu/libs-release/</url>
+            <url>https://repository.lasers-enigma.eu/r/</url>
         </repository>
         <repository>
             <id>spigot-repo</id>
@@ -111,13 +111,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <version>1.16.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>eu.lasersenigma</groupId>
             <artifactId>LasersEnigma</artifactId>
-            <version>6.4.1</version>
+            <version>6.7.2</version>
             <scope>provided</scope>
         </dependency>
         <!-- For build.xml -->
