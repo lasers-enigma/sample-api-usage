@@ -1,6 +1,6 @@
 package eu.lasersenigma.apiusage.lasers_stats_show;
 
-import eu.lasersenigma.Main;
+import eu.lasersenigma.LasersEnigmaPlugin;
 import eu.lasersenigma.apiusage.ApiUsage;
 import eu.lasersenigma.areas.Area;
 import eu.lasersenigma.areas.Areas;
@@ -186,7 +186,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
         ArrayList<String> nbStepRecordsStrs = area.getStats().getNbStepPlayersRecord().entrySet().stream()
                 .limit(10)
                 .map(e -> {
-                    StringBuilder sb = new StringBuilder(Main.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
+                    StringBuilder sb = new StringBuilder(LasersEnigmaPlugin.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
                     sb.append(SEPARATOR);
                     sb.append(e.getValue());
                     return sb.toString();
@@ -198,7 +198,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
         ArrayList<String> durationRecordsStrs = area.getStats().getDurationPlayersRecord().entrySet().stream()
                 .limit(10)
                 .map(e -> {
-                    StringBuilder sb = new StringBuilder(Main.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
+                    StringBuilder sb = new StringBuilder(LasersEnigmaPlugin.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
                     sb.append(SEPARATOR);
                     sb.append(DurationFormatUtils.formatDurationHMS(e.getValue().toMillis()));
                     return sb.toString();
@@ -210,7 +210,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
         ArrayList<String> nbActionRecordsStrs = area.getStats().getNbActionPlayersRecord().entrySet().stream()
                 .limit(10)
                 .map(e -> {
-                    StringBuilder sb = new StringBuilder(Main.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
+                    StringBuilder sb = new StringBuilder(LasersEnigmaPlugin.getInstance().getServer().getOfflinePlayer(e.getKey()).getName());
                     sb.append(SEPARATOR);
                     sb.append(e.getValue());
                     return sb.toString();
@@ -272,7 +272,7 @@ public class LasersStatsCommandExecutor implements CommandExecutor {
         } else {
             for (int i = 1; i <= topPlayers.size(); ++i) {
                 Entry<UUID, Integer> entry = topPlayers.get(i - 1);
-                statsMessages.add(i + ". " + Main.getInstance().getServer().getOfflinePlayer(entry.getKey()).getName() + " (" + String.valueOf(entry.getValue()) + ")");
+                statsMessages.add(i + ". " + LasersEnigmaPlugin.getInstance().getServer().getOfflinePlayer(entry.getKey()).getName() + " (" + String.valueOf(entry.getValue()) + ")");
             }
         }
     }

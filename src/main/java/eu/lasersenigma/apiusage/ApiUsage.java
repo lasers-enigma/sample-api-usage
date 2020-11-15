@@ -1,6 +1,6 @@
 package eu.lasersenigma.apiusage;
 
-import eu.lasersenigma.Main;
+import eu.lasersenigma.LasersEnigmaPlugin;
 import eu.lasersenigma.apiusage.creepers_explosion.CreeperExplosion;
 import eu.lasersenigma.apiusage.lasers_burns_blocks.LasersBurnsBlocks;
 import eu.lasersenigma.apiusage.swords_attacks_redirect_lasers.SwordsAttacksRedirectLasers;
@@ -17,9 +17,9 @@ public final class ApiUsage extends JavaPlugin {
     
     private static ApiUsage instance;
     
-    private static Main lasersEnigmaInstance = null;
+    private static LasersEnigmaPlugin lasersEnigmaInstance = null;
     
-    public static Main getLasersEnigmaInstance() {
+    public static LasersEnigmaPlugin getLasersEnigmaInstance() {
         return lasersEnigmaInstance;
     }
     
@@ -37,7 +37,7 @@ public final class ApiUsage extends JavaPlugin {
         getLogger().warning("[LasersEnigmaApiUsage] Keep in mind that this plugin contains sample features and is not meant to be used as is in a server");
         if (lasersEnigmaInstance == null) {
             if (getServer().getPluginManager().isPluginEnabled("LasersEnigma")) {
-                lasersEnigmaInstance = (Main) getServer().getPluginManager().getPlugin("LasersEnigma");
+                lasersEnigmaInstance = (LasersEnigmaPlugin) getServer().getPluginManager().getPlugin("LasersEnigma");
                 instance = this;
                 onEnableConfirmed();
             }

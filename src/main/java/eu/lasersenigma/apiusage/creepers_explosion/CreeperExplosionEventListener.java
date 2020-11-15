@@ -62,8 +62,9 @@ public class CreeperExplosionEventListener implements Listener {
                     // The new particle direction
                     Vector directionVector = baseLocation.toVector().subtract(particleSpawnLocation.toVector());
                     Direction direction = new Direction(directionVector);
+                    int lightLevel = 15;
                     // Send the new laser particle
-                    area.addLaserParticle(new LaserParticle(event.getEntity().getUniqueId(), baseLocation, direction, PARTICLE_COLOR, area));
+                    area.addLaserParticle(new LaserParticle(event.getEntity().getUniqueId(), baseLocation, direction, PARTICLE_COLOR, area, lightLevel));
                 }
             }
         }
